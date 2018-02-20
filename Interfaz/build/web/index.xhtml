@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/Resources/Estilos/Styles.css" />
+    </h:head>
+
+
+
+    <h:body>
+
+        <h:form id="frmCapturadores" enctype="multipart/form-data"> 
+            <center>
+                <p:graphicImage value="#{FacesContext.getCurrentInstance().getExternalContext()}/Resources/Imagenes/APIs.png"/>
+                <p:graphicImage value="#{FacesContext.getCurrentInstance().getExternalContext()}/Resources/Imagenes/umb2.jpg"/>
+                <p:growl id="growl" showDetail="true" sticky="true" />
+
+                <br/><br/>
+                <p:menubar>
+                    <p:menuitem value="Google Maps" icon="ui-icon-plus"
+                                oncomplete="PF('dlgRequestCapturer').show();"
+                                actionListener="#{proceso.procesar}">
+
+                    </p:menuitem>
+                    <p:menuitem value="Gmail" icon="ui-icon-plus"
+                                oncomplete="PF('dlgGmail').show();"
+                                actionListener="#{proceso.procesar}">
+
+                    </p:menuitem>
+                    <p:menuitem value="Dudas" icon="ui-icon-plus"
+                                oncomplete="PF('dlgRequestLinks').show();"
+                                actionListener="#{proceso.procesar}">
+
+                    </p:menuitem>
+                    <p:menuitem value="Integrantes" icon="ui-icon-plus"
+                                oncomplete="PF('dlgRequestIntegrantes').show();"
+                                actionListener="#{proceso.procesar}">
+
+                    </p:menuitem>
+
+
+
+                </p:menubar>   
+
+                <p:dialog id="dRequestLinks" header="¿Tienes dudas sobre las APIs?" widgetVar="dlgRequestLinks" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false" closable="false">
+
+                    <p:outputPanel id="RequestCapturesLinks" style="text-align:center;">
+                        <p:panelGrid columns="1">
+                            <h:outputText value="http://www.consultorjava.com/wp/libro-diseno-apis-dummies-principiantes" />
+                            <h:outputText value="http://www.ticbeat.com/tecnologias/que-es-una-api-para-que-sirve" />
+                            <h:outputText value="https://bbvaopen4u.com/es/actualidad/que-es-una-api-y-que-puede-hacer-por-mi-negocio" />
+                            <h:outputText value="https://es.wikipedia.org/wiki/Interfaz_de_programaci%C3%B3n_de_aplicaciones" />
+
+
+                        </p:panelGrid><br/>
+
+                        <p:commandButton value="Cerrar"
+                                         actionListener="#{googleMaps.cerrar}"
+                                         oncomplete="PF('dlgRequestLinks').hide();" />
+
+
+
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:dialog id="dRequestIntegrantes" header="Integrantes" widgetVar="dlgRequestIntegrantes" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false" closable="false">
+
+                    <p:outputPanel id="RequestCapturesInetgrantes" style="text-align:center;">
+                        <p:panelGrid columns="1">
+                            <h:outputText value="Wilson Alejandro Gonzalez Gaitan " />
+                            <h:outputText value="Julián González Bucheli " />
+
+
+                        </p:panelGrid><br/>
+
+                        <p:commandButton value="Cerrar"
+                                         actionListener="#{googleMaps.cerrar}"
+                                         oncomplete="PF('dlgRequestIntegrantes').hide();" />
+
+
+
+                    </p:outputPanel>
+
+                </p:dialog>
+
+
+                <p:dialog id="dRequestCapturer" header="Google Maps" widgetVar="dlgRequestCapturer" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false" closable="false">
+
+                    <p:outputPanel id="RequestCapturesDetail" style="text-align:center;">
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Ubicacion: " />
+                            <p:inputText value="#{googleMaps.ubicacion}" />
+
+
+                        </p:panelGrid><br/>
+                        <p:commandButton value="Consultar"
+                                         actionListener="#{googleMaps.consultar}"
+                                         update="RequestCapturesDetail" />
+                        <p:commandButton value="Cerrar"
+                                         actionListener="#{googleMaps.cerrar}"
+                                         oncomplete="PF('dlgRequestCapturer').hide();" />
+
+                        <br/> <br/>
+
+                        <h:outputText value="Coordenadas " />
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Ubicacion en x: " />
+                            <p:inputText value="#{googleMaps.resultadoEnX}" />
+                            <h:outputText value="Ubicacion en y: " />
+                            <p:inputText value="#{googleMaps.resultadoEnY}" />
+                            <h:outputText value="Busqueda Global: " />
+                            <p:inputText value="#{googleMaps.busquedaGlobal}" />
+                        </p:panelGrid>
+
+                    </p:outputPanel>
+
+                </p:dialog>
+
+
+                <p:dialog id="dGmail" header="Gmail" widgetVar="dlgGmail" modal="true" showEffect="fade"
+                          hideEffect="fade" resizable="false" closable="false">
+
+                    <p:outputPanel id="RequestGmailes" style="text-align:center;">
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Usuario: " />
+                            <p:inputText value="#{mail.usuario}" />
+                            <h:outputText value="Clave: " />
+                            <p:inputText value="#{mail.clave}" />
+                            <h:outputText value="Motivo: " />
+                            <p:inputText value="#{mail.motivo}" />
+                            <h:outputText value="Destinatario: " />
+                            <p:inputText value="#{mail.destinario}" />
+                            <h:outputText value="Mensaje: " />
+                            <p:inputText value="#{mail.mensaje}" />
+
+                        </p:panelGrid><br/>
+                        <p:commandButton value="Enviar"
+                                         actionListener="#{mail.enviar}"
+                                         update="RequestGmailes" />
+                        <p:commandButton value="Cerrar"
+                                         actionListener="#{mail.cancelar}"
+                                         oncomplete="PF('dlgGmail').hide();" />
+                        <br/><br/>
+                        <h:outputText value="Resultado " /> 
+                        <p:inputText value="#{mail.resultado}" />
+
+                    </p:outputPanel>
+
+                </p:dialog>
+                <div style="background-color: lightblue">
+                    <br/><br/>
+                    <p:graphicImage  value="#{FacesContext.getCurrentInstance().getExternalContext()}/Resources/Imagenes/text final for homepage.png" />
+                </div>
+
+            </center>
+        </h:form>
+    </h:body>
+
+</html>
